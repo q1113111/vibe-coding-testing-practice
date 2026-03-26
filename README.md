@@ -8,6 +8,7 @@
 - [生成這個專案的 Prompt](#生成這個專案的-prompt)
 - [安裝指令](#安裝指令)
 - [啟動指令](#啟動指令)
+- [自動化測試](#自動化測試)
 - [專案結構](#專案結構)
 - [手動測試流程清單](#手動測試流程清單)
 - [環境變數](#環境變數)
@@ -125,6 +126,38 @@ npm run preview
 ```
 
 生產環境不會啟用 MSW。
+
+## 自動化測試
+
+專案已加入 GitHub Actions workflow：
+
+- 每次 push 到任意分支都會自動執行測試
+- 每次 pull request 也會自動執行測試
+- 執行指令為 `npm run test:coverage`
+- 設有 coverage threshold，低於門檻時 workflow 會直接失敗
+- 測試完成後會上傳可下載的報告 artifact，包含：
+    - `coverage/` 覆蓋率 HTML 報告
+    - `html-report/` Vitest HTML 測試報告
+
+### Coverage 門檻
+
+- Statements: `70%`
+- Branches: `70%`
+- Functions: `60%`
+- Lines: `70%`
+
+### 在 GitHub 下載覆蓋率報告
+
+1. 進入該次 workflow run 的 Actions 頁面
+2. 在頁面下方找到 Artifacts 區塊
+3. 下載名稱類似 `coverage-report-分支名稱-run編號` 的 artifact
+4. 解壓縮後開啟 `coverage/index.html` 即可查看覆蓋率報告
+
+### 本機執行覆蓋率測試
+
+```bash
+npm run test:coverage
+```
 
 ## 專案結構
 
